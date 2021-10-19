@@ -4,7 +4,7 @@
         id="cordova-plugin-gnssclockplugin" version="0.0.1">
     <name>GnssclockPlugin</name>
 
-    <description>An Android Cordova plugin that provides gps clock time.</description>
+    <description>An Android Cordova plugin that provides gps clock time using gnssClock.</description>
     <license>MIT</license>
 
     <keywords>cordova,android,toast,message,alert</keywords>
@@ -25,5 +25,6 @@
         </config-file>
 
         <source-file src="src/android/GnssclockPlugin.java" target-dir="src/com/navroopsingh/cordova/plugin" />
+        <source-file src="src/android/TestApi.java" target-dir="src/com/navroopsingh/cordova/plugin" />
     </platform>
 </plugin>
