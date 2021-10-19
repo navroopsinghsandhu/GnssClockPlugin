@@ -22,8 +22,12 @@ public class GnssclockPlugin extends CordovaPlugin {
       }
     
       GnssClock gpsTime = new GnssClock();
+      int timeNanosValue = (int)gpsTime.mTimeNanos;             // value = -9223372000000000000
+      int fullBiasNanosValue = (int)gpsTime.mFullBiasNanos;     // value = -9223372000000000000
+      int biasNanosValue = (int)gpsTime.mBiasNanos;           // value = 0
 
-      PluginResult pluginResult = new PluginResult(PluginResult.Status.OK , gpsTime.mTimeNanos);
+      int trueGpsTime = timeNanosValue - (fullBiasNanosValue + biasNanosValue);
+      PluginResult pluginResult = new PluginResult(PluginResult.Status.OK , trueGpsTime);
       callbackContext.sendPluginResult(pluginResult);
       return true;
   }
@@ -53,8 +57,8 @@ final class GnssClock implements Parcelable {
     private int mLeapSecond;
     public long mTimeNanos;
     private double mTimeUncertaintyNanos;
-    private long mFullBiasNanos;
-    private double mBiasNanos;
+    public long mFullBiasNanos;
+    public double mBiasNanos;
     private double mBiasUncertaintyNanos;
     private double mDriftNanosPerSecond;
     private double mDriftUncertaintyNanosPerSecond;
