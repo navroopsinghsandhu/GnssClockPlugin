@@ -22,11 +22,17 @@ public class GnssclockPlugin extends CordovaPlugin {
       }
     
       GnssClock gpsTime = new GnssClock();
-      int timeNanosValue = (int)gpsTime.mTimeNanos;             // value = -9223372000000000000
-      int fullBiasNanosValue = (int)gpsTime.mFullBiasNanos;     // value = -9223372000000000000
-      int biasNanosValue = (int)gpsTime.mBiasNanos;           // value = 0
+      // Gets the GNSS receiver internal hardware clock value in nanoseconds.
+      float mtimeNanosValue = gpsTime.mTimeNanos;           
+      
+      //Gets the difference between hardware clock (getTimeNanos()) inside GPS receiver 
+      //and the true GPS time since 0000Z, January 6, 1980, in nanoseconds.
+      float mfullBiasNanosValue = gpsTime.mFullBiasNanos;     
 
-      int trueGpsTime = timeNanosValue - (fullBiasNanosValue + biasNanosValue);
+      //Gets the clock's sub-nanosecond bias.
+      int biasNanosValue = (int)gpsTime.mBiasNanos;           
+      float biasInFloat = biasNanosValue;
+      float trueGpsTime = mtimeNanosValue - (mfullBiasNanosValue + biasInFloat);
       PluginResult pluginResult = new PluginResult(PluginResult.Status.OK , trueGpsTime);
       callbackContext.sendPluginResult(pluginResult);
       return true;
